@@ -5,6 +5,7 @@ import sourceConstraints      from './commands/constraints/source';
 import constraints            from './commands/constraints';
 
 const plugin: Plugin = {
+
   configuration: {
     constraintsPath: {
       description: `The path of the constraints file.`,
@@ -17,6 +18,11 @@ const plugin: Plugin = {
     sourceConstraints,
     constraints,
   ],
+  hooks: {
+    afterAllInstalled: () => {
+      console.log("am I run?");
+    },
+  },
 };
 
 // eslint-disable-next-line arca/no-default-export
