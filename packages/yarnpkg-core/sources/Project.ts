@@ -1432,7 +1432,7 @@ export class Project {
 
     await this.configuration.triggerHook(hooks => {
       return hooks.afterAllInstalled;
-    }, this);
+    }, this, opts);
   }
 
   generateLockfile() {

@@ -1,8 +1,12 @@
-import {Plugin, SettingsType, Hooks as CoreHooks, Project} from '@yarnpkg/core';
+import {Plugin, SettingsType, Hooks as CoreHooks, Project, StreamReport, MessageName, Report} from '@yarnpkg/core';
 
-import queryConstraints                                    from './commands/constraints/query';
-import sourceConstraints                                   from './commands/constraints/source';
-import constraints                                         from './commands/constraints';
+import {InstallOptions}                                                                       from 'packages/yarnpkg-core/sources/Project';
+
+import {Stream}                                                                               from 'stream';
+
+import queryConstraints                                                                       from './commands/constraints/query';
+import sourceConstraints                                                                      from './commands/constraints/source';
+import constraints                                                                            from './commands/constraints';
 
 const plugin: Plugin<CoreHooks> = {
 
@@ -24,20 +28,21 @@ const plugin: Plugin<CoreHooks> = {
     constraints,
   ],
   hooks: {
-    afterAllInstalled: (project: Project) => {
-      const {exec} = require('child_process');
+    afterAllInstalled: (project: Project, opts: InstallOptions) => {
+      const util = require('util');
+      const exec = util.promisify(require('child_process').exec);
       var cmd = 'yarn constraints';
 
-      exec(cmd, function(error: any, stdout: any, stderr: any) {
-        if (error)
-          // node couldn't execute the command
-          return;
+      async function ls() {
+        const {stdout} = await exec(cmd);
+        // console.log(stdout)
+        opts.report.reportInfo(MessageName.UNNAMED, stdout);
 
-
-        // the *entire* stdout and stderr (buffered)
-        console.log(`stdout: ${stdout}`);
-        console.log(`stderr: ${stderr}`);
-      });
+        // if (report.hasErrors()) {
+        //   return report.exitCode();
+        // }
+      }
+      ls();
     },
   },
 };

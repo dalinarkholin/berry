@@ -5,7 +5,7 @@ import {Writable, Readable}                                     from 'stream';
 import {SettingsDefinition, PluginConfiguration, Configuration} from './Configuration';
 import {Fetcher}                                                from './Fetcher';
 import {Linker}                                                 from './Linker';
-import {Project}                                                from './Project';
+import {Project, InstallOptions}                                from './Project';
 import {Resolver, ResolveOptions}                               from './Resolver';
 import {Locator, Descriptor}                                    from './types';
 
@@ -87,6 +87,7 @@ export type Hooks = {
   // completed.
   afterAllInstalled?: (
     project: Project,
+    opts: InstallOptions,
   ) => void,
 };
 
