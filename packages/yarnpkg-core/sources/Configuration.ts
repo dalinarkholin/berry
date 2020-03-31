@@ -324,13 +324,6 @@ export const coreDefinitions: {[coreSettingName: string]: SettingsDefinition} = 
     default: `throw`,
   },
 
-  // Settings relating to plugins
-  enableConstraintsValidation: {
-    description: `If true, constraints will be run during the afterAllInstalled hook during the yarn install process`,
-    type: SettingsType.BOOLEAN,
-    default: false,
-  },
-
   // Package patching - to fix incorrect definitions
   packageExtensions: {
     description: `Map of package corrections to apply on the dependency tree`,

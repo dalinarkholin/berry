@@ -34,7 +34,7 @@ export default class ConstraintsCheckCommand extends BaseCommand {
   });
 
   @Command.Path(`constraints`)
-  async execute() {
+  async execute(cwd?: string) {
     for (let t = 0; t < 10; ++t) {
       const configuration = await Configuration.find(this.context.cwd, this.context.plugins);
       const {project} = await Project.find(configuration, this.context.cwd);
